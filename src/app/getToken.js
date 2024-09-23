@@ -19,7 +19,6 @@ export async function getToken(){
     
             },
         });
-        console.log("First part");
         await cookies().set('access_token', tokenResponse.data.access_token);
         let tokenExpiresTime = moment().add(tokenResponse.data.expires_in, 's');
         tokenExpiresTime = tokenExpiresTime.subtract(1, 's');
