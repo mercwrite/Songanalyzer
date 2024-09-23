@@ -19,7 +19,7 @@ export async function getToken(){
     
             },
         });
-        await cookies().set('access_token', tokenResponse.data.access_token);
+        cookies().set('access_token', tokenResponse.data.access_token);
         let tokenExpiresTime = moment().add(tokenResponse.data.expires_in, 's');
         tokenExpiresTime = tokenExpiresTime.subtract(1, 's');
         cookies().set('expires_time', tokenExpiresTime);
@@ -36,8 +36,8 @@ export async function getToken(){
         
                 },
             });
-            await cookies().set('access_token', tokenResponse.data.access_token);
-            let tokenExpiresTime = await moment().add(tokenResponse.data.expires_in, 's');
+            cookies().set('access_token', tokenResponse.data.access_token);
+            let tokenExpiresTime = moment().add(tokenResponse.data.expires_in, 's');
             tokenExpiresTime = tokenExpiresTime.subtract(1, 's');
             cookies().set('expires_time', tokenExpiresTime);
         }

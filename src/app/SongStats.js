@@ -7,18 +7,18 @@ export default function SongStats(props){
     
     return(
         <div>
-           <li>
+           <h1 className=" text-2xl font-bold"> 
             Key: {key}
-           </li>
-           <li>
+           </h1>
+           <h1 className="text-2xl font-bold">
             Mode: {mode}
-           </li>
-           <li>
+           </h1>
+           <h1 className="text-2xl font-bold">
             BPM: {bpm}
-           </li>
-           <li>
+           </h1>
+           <h1 className="text-2xl font-bold">
             Duration: {duration}
-           </li>
+           </h1>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import SongInput from './SongInput';
 export default function Home() {
 
     return (
-    <div>
+    <div className='p-12'>
         <SongInput/>
     </div>
     
