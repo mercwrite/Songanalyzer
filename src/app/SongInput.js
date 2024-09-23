@@ -9,7 +9,7 @@ const modes = ["Minor", "Major"];
 
 function secondsToMinutes(seconds){
     let minutes = Math.floor(seconds/60);
-    let remainder = seconds % 60;
+    let remainder = Math.floor(seconds % 60);
 
     return `${minutes.toString()}:${remainder.toString()}`;
 }
@@ -17,25 +17,25 @@ function secondsToMinutes(seconds){
 export default function SongInput(props){
     const [songId, setSongId] = useState('');
     const [songStats, setSongStats] = useState(null);
-    const [key, setKey] = useState();
-    const [bpm, setBpm] = useState();
-    const [duration, setDuration] = useState();
-    const [mode, setMode] = useState();
+    const [key, setKey] = useState(null);
+    const [bpm, setBpm] = useState(null);
+    const [duration, setDuration] = useState(null);
+    const [mode, setMode] = useState(null);
 
 
-    const handleClick = async() =>{
+    async function handleClick () {
         
         //Get Audio analysis information from the api
         const trackResponse = await getTrackResponse(props.accessToken, songId);
-        
         setKey(keys[trackResponse[0]]);
-        setBpm(trackResponse[1]);
+        setBpm(Math.ceil(trackResponse[1]));
         setMode(modes[trackResponse[2]]);
         setDuration(secondsToMinutes(trackResponse[3]));
-
-        setSongStats(<SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>)
+        
+        //setSongStats(<SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>)
         
     }
+
 
     return(
         <div>
@@ -46,7 +46,7 @@ export default function SongInput(props){
             <button onClick={handleClick}>
                 Search
             </button>
-            {songStats}
+            {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
         </div>
     );
 }

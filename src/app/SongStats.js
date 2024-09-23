@@ -11,10 +11,10 @@ export default function SongStats(props){
             Key: {key}
            </li>
            <li>
-            BPM: {bpm}
+            Mode: {mode}
            </li>
            <li>
-            Mode: {mode}
+            BPM: {bpm}
            </li>
            <li>
             Duration: {duration}
