@@ -25,7 +25,7 @@ export async function getToken(){
         cookies().set('expires_time', tokenExpiresTime);
     }else{
         //if the cookie is expired, get a new one
-        if(!(moment() < cookies().get('expires_time')) || cookies.get('access_token') === ''){
+        if(!(moment() < cookies().get('expires_time').value) || cookies.get('access_token').value === ''){
             const tokenResponse = await axios.post('https://accounts.spotify.com/api/token', null, {
                 headers: {
                     'Authorization': 'Basic ' + Buffer.from(`${clientId}:${clientSecret}`).toString('base64'),
