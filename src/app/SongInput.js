@@ -14,9 +14,8 @@ function secondsToMinutes(seconds){
     return `${minutes.toString()}:${remainder.toString()}`;
 }
 
-export default function SongInput(props){
+export default function SongInput(){
     const [songId, setSongId] = useState('');
-    const [songStats, setSongStats] = useState(null);
     const [key, setKey] = useState(null);
     const [bpm, setBpm] = useState(null);
     const [duration, setDuration] = useState(null);
@@ -26,7 +25,7 @@ export default function SongInput(props){
     async function handleClick () {
         
         //Get Audio analysis information from the api
-        const trackResponse = await getTrackResponse(props.accessToken, songId);
+        const trackResponse = await getTrackResponse(songId);
         setKey(keys[trackResponse[0]]);
         setBpm(Math.ceil(trackResponse[1]));
         setMode(modes[trackResponse[2]]);
