@@ -32,8 +32,6 @@ export default function SongInput(props){
         setMode(modes[trackResponse[2]]);
         setDuration(secondsToMinutes(trackResponse[3]));
         
-        //setSongStats(<SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>)
-        
     }
 
 
