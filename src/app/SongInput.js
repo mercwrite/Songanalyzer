@@ -10,7 +10,7 @@ const modes = ["Minor", "Major"];
 
 function secondsToMinutes(seconds){
     let minutes = Math.floor(seconds/60);
-    let remainder = Math.floor(seconds % 60);
+    let remainder = Math.round(seconds % 60);
     let leadingZero = '';
     remainder < 10 ? leadingZero = '0' : leadingZero = '';
 
@@ -25,18 +25,21 @@ export default function SongInput(){
     const [mode, setMode] = useState(null);
     const [image, setImage] = useState(null);
     const [songName, setSongName] = useState('');
-
+    const [artists, setArtists] = useState([]);
+    const [album, setAlbum] = useState('');
 
     async function handleClick () {
         
         //Get Audio analysis information from the api
         const trackResponse = await getTrackResponse(songId);
         setKey(keys[trackResponse[0]]);
-        setBpm(Math.ceil(trackResponse[1]));
+        setBpm(Math.round(trackResponse[1]));
         setMode(modes[trackResponse[2]]);
         setDuration(secondsToMinutes(trackResponse[3]));
         setImage(trackResponse[5]);
         setSongName(trackResponse[7]);
+        setArtists(trackResponse[6]);
+        setAlbum(trackResponse[4]);
         
     }
 
@@ -59,7 +62,7 @@ export default function SongInput(){
             </div>
             {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
             <div>
-                {image != null && <SongInfo img={image} songName={songName}/>}
+                {image != null && <SongInfo img={image} songName={songName} artists={artists} album={album}/>}
             </div>
         </div>
     );
