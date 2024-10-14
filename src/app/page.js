@@ -1,5 +1,6 @@
-// app/page.js
 import SongInput from './SongInput';
+import { SessionProvider } from "next-auth/react"
+
 export default function Home() {
 
     return (
