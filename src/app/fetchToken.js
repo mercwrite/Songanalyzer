@@ -1,8 +1,9 @@
-import Cookies from 'js-cookie';
+'use server';
+import { cookies } from "next/headers";
 
 export async function fetchSpotifyToken() {
-    const spotifyToken = Cookies.get('spotifyToken');
-    if (!spotifyToken) {
+    const cookieStore = cookies();
+    if (!cookieStore.has("spotifyToken")) {
       // Fetch new token if not found in cookies
       const tokenResponse = await fetch('http://localhost:3000/api/spotifyToken',{
             method: 'POST',
@@ -12,11 +13,14 @@ export async function fetchSpotifyToken() {
       });
       if (!tokenResponse.ok) throw new Error('Failed to fetch Spotify token');
       const data = await tokenResponse.json();
+      cookieStore.set("spotifyToken", data.access_token, {
+        expires:data.expires_in,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+      });
 
-
-      Cookies.set('spotifyToken', data.access_token, {expires : 1 / 24});
       return data.access_token;
     }
   
-    return spotifyToken.value;
+    return cookieStore.get("spotifyToken").value;
   }
