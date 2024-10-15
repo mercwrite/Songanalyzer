@@ -1,4 +1,6 @@
-This project is a Next.js project utilizing the Spotify Web API to find certain statistics and data from various artists.
+Songanalyzer is a Next.js Application that helps producers find information for any song on Spotify.
+
+
 
 Created by Mark Wright
 
