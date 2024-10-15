@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export async function fetchSpotifyToken() {
     const cookieStore = cookies();
-    if (!cookieStore.has("spotifyToken")) {
+    if (cookieStore.has("spotifyToken") == false) {
       // Fetch new token if not found in cookies
       const tokenResponse = await fetch('http://localhost:3000/api/spotifyToken',{
             method: 'POST',
@@ -13,8 +13,9 @@ export async function fetchSpotifyToken() {
       });
       if (!tokenResponse.ok) throw new Error('Failed to fetch Spotify token');
       const data = await tokenResponse.json();
+      const age = 3599;
       cookieStore.set("spotifyToken", data.access_token, {
-        expires:data.expires_in,
+        maxAge: age,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
       });

@@ -10,7 +10,7 @@ export default function SongInfo(props){
         <div>
             <h1 className="font-bold">Song: {songName} - {artists}</h1>
             <h1 className="font-bold">Album: {album} </h1>
-            <img src={imgSrc}/>
+            <img src={imgSrc} className=""/>
             
         </div>
     )

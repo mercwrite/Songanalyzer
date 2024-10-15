@@ -1,12 +1,22 @@
-import SongInput from './SongInput';
-import { SessionProvider } from "next-auth/react"
+'use client';
+import SongInput from './songinput';
+import NavBar from './navbar';
+import { useState, useEffect } from 'react';
+import SongDisplay from './songdisplay';
 
 export default function Home() {
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+      };
+
     return (
-    <div className='p-12'>
-        <SongInput/>
+    <div>
+        <NavBar onSearch={handleSearch}/>
+        <div className='p-12'>
+            {searchQuery != '' && <SongDisplay songId={searchQuery}/>}
+        </div>
     </div>
-    
     );
 }

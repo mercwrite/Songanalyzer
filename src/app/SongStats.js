@@ -6,19 +6,19 @@ export default function SongStats(props){
     const mode = props.mode;
     
     return(
-        <div>
-           <h1 className=" text-2xl font-bold"> 
+        <div className="relative">
+           <p className=" text-4xl font-bold"> 
             Key: {key}
-           </h1>
-           <h1 className="text-2xl font-bold">
+           </p>
+           <p className="text-4xl font-bold top-2">
             Mode: {mode}
-           </h1>
-           <h1 className="text-2xl font-bold">
+           </p>
+           <p className="text-4xl font-bold">
             BPM: {bpm}
-           </h1>
-           <h1 className="text-2xl font-bold">
+           </p>
+           <p className="text-4xl font-bold">
             Duration: {duration}
-           </h1>
+           </p>
         </div>
     );
 }

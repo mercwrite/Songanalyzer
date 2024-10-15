@@ -1,8 +1,7 @@
-'use client'
-import React, { useEffect } from "react";
-import { useState } from "react";
+'use client';
 import SongStats from "./songstats";
 import SongInfo from "./songinfo";
+import { useEffect, useState } from "react";
 
 const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const modes = ["Minor", "Major"];
@@ -16,9 +15,10 @@ function secondsToMinutes(seconds){
     return `${minutes.toString()}:${leadingZero}${remainder.toString()}`;
 }
 
-export default function SongInput(){
-    
-    const [songId, setSongId] = useState('');
+export default function SongDisplay (props){
+
+    const [info, setInfo] = useState(false);
+    const [songId, setSongId] = useState(props.songId);
     const [key, setKey] = useState(null);
     const [bpm, setBpm] = useState(null);
     const [duration, setDuration] = useState(null);
@@ -31,7 +31,7 @@ export default function SongInput(){
     const [trackData, setTrackData] = useState(null);
     const [error, setError] = useState(null);
 
-    async function handleClick () {
+    async function getInfo () {
         //Get Audio analysis information from the api
         fetch('/api/trackAnalysis', {
             method: 'POST',
@@ -64,8 +64,22 @@ export default function SongInput(){
         });
     }
 
+    if(!info){
+        setInfo(true);
+        getInfo();
+        
+    }
+
+    useEffect(() =>{
+        if(props.songId != songId){
+            setSongId(props.songId);
+            setInfo(false);
+        }
+    }, [props.songId]);
+
     useEffect(() =>{
         if(analysisData != null && trackData != null){
+            try{
             setKey(keys[analysisData.data.track.key]);
             setBpm(Math.round(analysisData.data.track.tempo))
             setMode(modes[analysisData.data.track.mode])
@@ -74,29 +88,18 @@ export default function SongInput(){
             setSongName(trackData.data.name);
             setArtists(trackData.data.artists);
             setAlbum(trackData.data.album.name);
+            }catch{
+                setError("No data found");
+            }
         }
     }, [analysisData, trackData]);
 
-
-    return(
-        <div>
-            <input type="text"
-            className="flex rounded-xl border-gray-400 drop-shadow-2xl placeholder-slate-600 text-slate-800 placeholder:p-2 text-left"
-            placeholder="Enter Song Id..."
-            value={songId}
-            onChange={(event) => setSongId(event.target.value)}/>
-            <div className="p-2">
+    return (
+        <div className="relative">
+            <div className="absolute left-5">
+                {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
             </div>
-            <button 
-            className="h-10 font-bold px-5 transition-colors duration-150 border border-bg-sky-500 rounded-lg focus:shadow-outline hover:bg-sky-500 hover:text-bg-sky-100"
-            onClick={handleClick}>
-                Search
-            </button>
-            {error != null && <text>Error: {error}</text>}
-            <div className="p-2">
-            </div>
-            {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
-            <div className=" float-right">
+            <div className="absolute right-5">
                 {image != null && <SongInfo img={image} songName={songName} artists={artists} album={album}/>}
             </div>
         </div>
