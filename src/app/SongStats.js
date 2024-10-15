@@ -6,19 +6,23 @@ export default function SongStats(props){
     const mode = props.mode;
     
     return(
-        <div className="relative">
-           <p className=" text-4xl font-bold"> 
-            Key: {key}
-           </p>
-           <p className="text-4xl font-bold top-2">
-            Mode: {mode}
-           </p>
-           <p className="text-4xl font-bold">
-            BPM: {bpm}
-           </p>
-           <p className="text-4xl font-bold">
-            Duration: {duration}
-           </p>
+        <div className="relative grid grid-cols-2 gap-4 p-10">
+            <div className="flex flex-col justify-center items-center w-48 h-48 bg-spotify-bg rounded-full shadow-lg">
+        <h3 className="text-sm text-spotify-placeholder mb-2">Key</h3>
+        <p className="text-4xl font-bold text-white">{key}</p>
+      </div>
+      <div className="flex flex-col justify-center items-center w-48 h-48 bg-spotify-bg rounded-full shadow-lg">
+        <h3 className="text-sm text-spotify-placeholder mb-2">Mode</h3>
+        <p className="text-4xl font-bold text-white">{mode}</p>
+      </div>
+      <div className="flex flex-col justify-center items-center w-48 h-48 bg-spotify-bg rounded-full shadow-lg">
+        <h3 className="text-sm text-spotify-placeholder mb-2">Duration</h3>
+        <p className="text-4xl font-bold text-white">{duration}</p>
+      </div>
+      <div className="flex flex-col justify-center items-center w-48 h-48 bg-spotify-bg rounded-full shadow-lg">
+        <h3 className="text-sm text-spotify-placeholder mb-2">BPM</h3>
+        <p className="text-4xl font-bold text-white">{bpm}</p>
+      </div>
         </div>
     );
 }

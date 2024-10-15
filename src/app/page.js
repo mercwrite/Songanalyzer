@@ -14,7 +14,7 @@ export default function Home() {
     return (
     <div>
         <NavBar onSearch={handleSearch}/>
-        <div className='p-12'>
+        <div className='p-5'>
             {searchQuery != '' && <SongDisplay songId={searchQuery}/>}
         </div>
     </div>
