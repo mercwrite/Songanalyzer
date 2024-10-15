@@ -15,7 +15,7 @@ export default function Home() {
     <div>
         <NavBar onSearch={handleSearch}/>
         <div className='p-5'>
-            {searchQuery != '' && <SongDisplay songId={searchQuery}/>}
+            {searchQuery != '' && <SongDisplay key={searchQuery} songId={searchQuery}/>}
         </div>
     </div>
     );
