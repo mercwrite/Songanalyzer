@@ -1,18 +1,15 @@
 'use client';
-import NavBar from './navbar';
+
 import { useState } from 'react';
+import { useSearch } from './context/searchContext';
 import SongDisplay from './songdisplay';
 
 export default function Home() {
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-      };
+    const { searchQuery } = useSearch();
 
     return (
     <div>
-        <NavBar onSearch={handleSearch}/>
         <div className="p-8"/>
         <div>
             {searchQuery != '' && <SongDisplay key={searchQuery} songId={searchQuery}/>}

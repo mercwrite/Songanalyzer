@@ -1,18 +1,16 @@
 'use client';
-import react from "react";
-import {useState, useEffect} from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { useSearch } from "./context/searchContext";
 
-export default function NavBar({onSearch}){
+export default function NavBar(){
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleSearch = () =>{
-        onSearch(searchQuery);
-    }
+    const { handleSearch } = useSearch();
 
     const handleKeyDown = (e) => {
       if (e.key === 'Enter') {
-        handleSearch();  // Trigger search when Enter key is pressed
+        handleSearch(searchQuery);  // Trigger search when Enter key is pressed
       }
     };
 
@@ -48,7 +46,7 @@ export default function NavBar({onSearch}){
               )}
             </div>
             <button
-              onClick={handleSearch}
+              onClick={() => handleSearch(searchQuery)}
               className=" bg-black text-white px-4 py-2 rounded-md"
             >
               Search
