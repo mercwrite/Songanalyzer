@@ -96,7 +96,6 @@ export default function SongDisplay (props){
 
     const handleColor = (bgcolor) =>{
         setColor(bgcolor);
-        console.log(color);
     }
 
     return (
