@@ -5,7 +5,7 @@ export async function fetchSpotifyToken() {
     const cookieStore = cookies();
     if (cookieStore.has("spotifyToken") == false) {
       // Fetch new token if not found in cookies
-      const tokenResponse = await fetch('songanalyzer-pgrfo766v-mercwrites-projects.vercel.app/api/spotifyToken',{
+      const tokenResponse = await fetch('https://songanalyzer-pgrfo766v-mercwrites-projects.vercel.app/api/spotifyToken',{
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
