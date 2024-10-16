@@ -13,13 +13,16 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Song Analyzer",
+  title: "Songanalyzer",
   description: "Find important info for any song",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon.ico" sizes="any" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
