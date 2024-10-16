@@ -1,7 +1,6 @@
 'use client';
-import SongInput from './songinput';
 import NavBar from './navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SongDisplay from './songdisplay';
 
 export default function Home() {
@@ -14,7 +13,8 @@ export default function Home() {
     return (
     <div>
         <NavBar onSearch={handleSearch}/>
-        <div className='p-5'>
+        <div className="p-8"/>
+        <div>
             {searchQuery != '' && <SongDisplay key={searchQuery} songId={searchQuery}/>}
         </div>
     </div>

@@ -30,7 +30,7 @@ export default function SongDisplay (props){
     const [analysisData, setAnalysisData] = useState(null);
     const [trackData, setTrackData] = useState(null);
     const [error, setError] = useState(null);
-
+    const [color, setColor] = useState('');
     async function getInfo () {
         //Get Audio analysis information from the api
         fetch('/api/trackAnalysis', {
@@ -94,13 +94,28 @@ export default function SongDisplay (props){
         }
     }, [analysisData, trackData]);
 
+    const handleColor = (bgcolor) =>{
+        setColor(bgcolor);
+        console.log(color);
+    }
+
     return (
-        <div className="relative">
-            <div className="absolute left-5">
-                {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
-            </div>
-            <div className="absolute right-5">
-                {image != null && <SongInfo img={image} songName={songName} artists={artists} album={album}/>}
+        <div className="relative min-h-screen">
+            {color != '' && 
+            <div
+            className="absolute top-13 left-0 w-full h-full z-0 pointer-events-none"
+            style={{
+                background: `linear-gradient(180deg, ${color} 0%, transparent 100%)`,
+            }}
+            key={color}
+            />}
+            <div className="relative p-5">
+                <div className="absolute left-5">
+                    {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
+                </div>
+                <div className="absolute right-5">
+                    {image != null && <SongInfo img={image} songName={songName} artists={artists} album={album} onColor={handleColor}/>}
+                </div>
             </div>
         </div>
     );

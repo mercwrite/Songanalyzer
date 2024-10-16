@@ -1,6 +1,7 @@
 'use client';
 import react from "react";
 import {useState, useEffect} from "react";
+import Image from "next/image";
 
 export default function NavBar({onSearch}){
     const [searchQuery, setSearchQuery] = useState('');
@@ -20,8 +21,13 @@ export default function NavBar({onSearch}){
     };
 
     return (
-        <nav className=" bg-black p-4 flex justify-between items-center shadow-2xl top-0">
+        <nav className=" fixed top-0 left-0 right-0 bg-black shadow-2xl p-3 flex justify-between items-center z-50">
           <div className="text-white text-2xl">Songanalyzer</div>
+          <Image src="/images/scouterlogo.png"
+          width={65}
+          height={65}
+          alt="logo"
+          className="fixed left-40 top-1 p-2"/>
           <div className="flex items-center space-x-2">
             <div className="relative">
               <input
