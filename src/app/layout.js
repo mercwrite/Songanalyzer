@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "./navbar";
-import { SearchProvider } from "./context/searchContext";
+import { SearchProvider } from "./context/searchcontext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
       >
         <SearchProvider>
           <NavBar/>
-          <main>
+          <main className="p-8">
               {children}
           </main>
         </SearchProvider>

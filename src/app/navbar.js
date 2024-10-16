@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import Image from "next/image";
-import { useSearch } from "./context/searchContext";
+import { useSearch } from "./context/searchcontext";
 
 export default function NavBar(){
     const [searchQuery, setSearchQuery] = useState('');

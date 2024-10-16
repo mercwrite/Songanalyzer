@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useState, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Create the SearchContext
 const SearchContext = createContext();
@@ -10,10 +11,12 @@ export const useSearch = () => useContext(SearchContext);
 // Provider component to wrap the app and provide search state
 export const SearchProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
-    console.log(query);
+    //query.preventDefault();
+    //setSearchQuery(query);
+    router.push(`/search?q=${query}`);
   };
 
   return (
