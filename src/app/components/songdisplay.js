@@ -1,6 +1,6 @@
 'use client';
-import SongStats from "../songstats";
-import SongInfo from "../songinfo";
+import SongStats from "./songstats";
+import SongInfo from "./songinfo";
 import { useEffect, useState } from "react";
 import nProgress from "nprogress";
 

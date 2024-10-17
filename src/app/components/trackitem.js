@@ -5,7 +5,7 @@ export default function TrackItem (props){
     const track = props.track;
 
     return (
-        <div key={track.id} className="flex relative space-x-4 transition ease-in-out bg-graybg hover:bg-spotify-hover hover:scale-105 rounded-lg w-9/10 duration-100">
+        <div key={track.id} className="flex relative space-x-4 transition ease-in-out bg-graybg hover:bg-spotify-hover hover:scale-105 rounded-lg w-9/10 max-w-screen duration-100">
                 <img
                 src={track.album.images[0].url}
                 width={128}
@@ -20,6 +20,18 @@ export default function TrackItem (props){
                     <p
                     className="text-spotify-placeholder text-md"
                     >{track.artists.map((artist) => artist.name).join(', ')}</p>
+                </div>
+                <div className="relative right-2">
+                    <Link
+                    href={track.external_urls.spotify}
+                    >
+                        <Image
+                        alt="Open spotify link"
+                        width={32}
+                        height={32}
+                        src={"/images/Spotify_Primary_Logo_RGB_Green.png"}
+                        />
+                    </Link>
                 </div>
         </div>
     );
