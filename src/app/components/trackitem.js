@@ -21,7 +21,7 @@ export default function TrackItem (props){
                     className="text-spotify-placeholder text-md"
                     >{track.artists.map((artist) => artist.name).join(', ')}</p>
                 </div>
-                <div className="relative right-2">
+                <div className="absolute right-2 top-12">
                     <Link
                     href={track.external_urls.spotify}
                     >
