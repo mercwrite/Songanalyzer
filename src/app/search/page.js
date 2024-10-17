@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from "next/navigation";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, Suspense} from 'react';
 import TrackItem from "@/app/trackitem";
 import nProgress from "nprogress";
 
@@ -47,17 +47,19 @@ const SearchPage = () => {
     }, [currentQuery]);
 
     return(
-        <div className="absolute top-24 left-10 right-10">
-            <h1
-            className="text-white text-4xl"
-            >Search results for &ldquo;{query}&rdquo;</h1>
-            <div className="p-2"></div>
-            <ul className="object-contain md:object-scale-down space-y-2">
-                {tracks != null && tracks.map((track) => (
-                    <TrackItem key={track.id} track={track}/>
-                ))}
-            </ul>
-        </div>
+        <Suspense>
+            <div className="absolute top-24 left-10 right-10">
+                <h1
+                className="text-white text-4xl"
+                >Search results for &ldquo;{query}&rdquo;</h1>
+                <div className="p-2"></div>
+                <ul className="object-contain md:object-scale-down space-y-2">
+                    {tracks != null && tracks.map((track) => (
+                        <TrackItem key={track.id} track={track}/>
+                    ))}
+                </ul>
+            </div>
+        </Suspense>
     )
 }
 

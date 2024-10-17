@@ -3,7 +3,7 @@ import NavBar from "./navbar";
 import { SearchProvider } from "./context/searchcontext";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css'; 
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -29,14 +29,16 @@ export default function ClientLayout({ children }) {
 
   return (
     <div>
-        <SearchProvider>
-          <NavBar/>
-          <main className="relative">
-              {children}
-              <Analytics/>
-              <SpeedInsights/>
-          </main>
-        </SearchProvider>
+        <Suspense>
+            <SearchProvider>
+            <NavBar/>
+            <main className="relative">
+                {children}
+                <Analytics/>
+                <SpeedInsights/>
+            </main>
+            </SearchProvider>
+        </Suspense>
     </div>
   );
 }
