@@ -28,17 +28,15 @@ export default function ClientLayout({ children }) {
     }, [pathname, searchParams]);
 
   return (
-    <div>
-        <Suspense>
-            <SearchProvider>
-            <NavBar/>
-            <main className="relative">
-                {children}
-                <Analytics/>
-                <SpeedInsights/>
-            </main>
-            </SearchProvider>
-        </Suspense>
-    </div>
+    <Suspense>
+        <SearchProvider>
+        <NavBar/>
+        <main className="relative">
+            {children}
+            <Analytics/>
+            <SpeedInsights/>
+        </main>
+        </SearchProvider>
+    </Suspense>
   );
 }

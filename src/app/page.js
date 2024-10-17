@@ -1,13 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useSearch } from './context/searchcontext';
-import SongDisplay from './songdisplay';
-import Link from 'next/link';
-
 export default function Home() {
-
-
     return (
     <div>
        <div className="flex flex-col items-center justify-center h-screen pt-16 bg-graybg">
