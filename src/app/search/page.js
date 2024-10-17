@@ -1,6 +1,5 @@
 'use client';
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import {useState, useEffect} from 'react';
 import TrackItem from "@/app/trackitem";
 import nProgress from "nprogress";
