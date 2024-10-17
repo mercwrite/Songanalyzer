@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from "next/navigation";
 import {useState, useEffect, Suspense} from 'react';
-import TrackItem from "@/app/trackitem";
+import TrackItem from "@/app/components/trackitem";
 import nProgress from "nprogress";
 
 

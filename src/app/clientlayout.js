@@ -1,5 +1,5 @@
 'use client';
-import NavBar from "./navbar";
+import NavBar from "./components/navbar";
 import { SearchProvider } from "./context/searchcontext";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';

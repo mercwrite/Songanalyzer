@@ -1,6 +1,6 @@
 'use client';
 import { useParams } from 'next/navigation';
-import SongDisplay from '@/app/songdisplay';
+import SongDisplay from '@/app/components/songdisplay';
 
 export default function TrackPage(){
     const params = useParams();
