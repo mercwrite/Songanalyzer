@@ -52,7 +52,7 @@ const SearchPage = () => {
             <div className="p-2"></div>
             <ul className="object-contain md:object-scale-down space-y-2">
                 {tracks != null && tracks.map((track) => (
-                    <TrackItem track={track}/>
+                    <TrackItem key={track.id} track={track}/>
                 ))}
             </ul>
         </div>
