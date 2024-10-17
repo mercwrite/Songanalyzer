@@ -1,20 +1,22 @@
 Songanalyzer is a Next.js Application that helps producers find information for any song on Spotify.
 
 ***CURRENT FEATURES***
-* Search by Spotify Song ID
+* Search by Name of Song
 * Display Key, Mode, Duration, and BPM
 * Display album cover, artist name, and album name
 
 ***PLANNED FEATURES***
-* Search by song name instead of song id
 * Display lyrics
 * Display songs also in the album
-* Proper landing page
+* Spotify open link
+* Mobile friendly UI
 
 ***SCREENSHOTS***
-![Screenshot (779)](https://github.com/user-attachments/assets/efdeaea9-64ca-4b32-9fd9-db3379c98758)
-![Screenshot (778)](https://github.com/user-attachments/assets/56e16b2b-e5a2-4377-88ca-b2f3eb434ba9)
-![Screenshot (768)](https://github.com/user-attachments/assets/b7024061-200d-48e4-95f5-bf4f9f1560ab)
+![Screenshot (878)](https://github.com/user-attachments/assets/d89d4472-535d-4e2a-ab5d-61b354846630)
+![Screenshot (876)](https://github.com/user-attachments/assets/97faecb4-7bee-4dae-93e8-96762895aab7)
+![Screenshot (877)](https://github.com/user-attachments/assets/31baaa64-1142-4530-8b26-099913d2a551)
+![Screenshot (879)](https://github.com/user-attachments/assets/f34201bb-f99e-4729-8527-4d3f249f9e51)
+![Screenshot (880)](https://github.com/user-attachments/assets/c39f53d4-852c-4c5f-b8e3-ec7f233321ef)
 
 Created by Mark Wright, currently in development
 
