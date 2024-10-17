@@ -19,6 +19,7 @@ function secondsToMinutes(seconds){
 export default function SongDisplay (props){
 
     const [info, setInfo] = useState(false);
+    const pSongId = props.songId;
     const [songId, setSongId] = useState(props.songId);
     const [key, setKey] = useState(null);
     const [bpm, setBpm] = useState(null);
@@ -74,11 +75,11 @@ export default function SongDisplay (props){
     }
 
     useEffect(() =>{
-        if(props.songId != songId){
-            setSongId(props.songId);
+        if(pSongId != songId){
+            setSongId(pSongId);
             setInfo(false);
         }
-    }, [props.songId]);
+    }, [pSongId]);
 
     useEffect(() =>{
         if(analysisData != null && trackData != null){

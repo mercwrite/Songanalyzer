@@ -11,6 +11,7 @@ export default function TrackItem (props){
                 width={128}
                 height={128}
                 className="float-left p-1 rounded-lg"
+                alt="Album image"
                 />
                 <div className="relative float-right top-8">
                     <Link href={`/track/${track.id}`}>
