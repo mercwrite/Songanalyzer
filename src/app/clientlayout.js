@@ -8,7 +8,7 @@ import nProgress from 'nprogress';
 import 'nprogress/nprogress.css'; 
 import { usePathname, useSearchParams } from 'next/navigation';
 
-export default function ClientLayout({ children }) {
+function ClientLayoutComponent({ children }){
 
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -27,16 +27,27 @@ export default function ClientLayout({ children }) {
       };
     }, [pathname, searchParams]);
 
+
+    return (
+        <SearchProvider>
+            <NavBar/>
+            <main className="relative">
+                {children}
+                <Analytics/>
+                <SpeedInsights/>
+            </main>
+        </SearchProvider>
+    )
+}
+
+export default function ClientLayout({ children }) {
+
+    
   return (
     <Suspense>
-        <SearchProvider>
-        <NavBar/>
-        <main className="relative">
+        <ClientLayoutComponent>
             {children}
-            <Analytics/>
-            <SpeedInsights/>
-        </main>
-        </SearchProvider>
+        </ClientLayoutComponent>
     </Suspense>
   );
 }
