@@ -2,6 +2,8 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {useState, useEffect} from 'react';
+import TrackItem from "@/app/trackitem";
+import nProgress from "nprogress";
 
 const SearchPage = () => {
     const [tracks, setTracks] = useState([]);
@@ -11,6 +13,7 @@ const SearchPage = () => {
     const [error, setError] = useState(null);
 
     async function fetchData () {
+        nProgress.start();
             fetch('/api/trackSearch', {
             method: 'POST',
             headers: {
@@ -26,6 +29,7 @@ const SearchPage = () => {
             setTracks(null);
             setError("Search Failed.");
         });
+        nProgress.done();
     }
 
     useEffect(() => {
@@ -42,15 +46,14 @@ const SearchPage = () => {
     }, [currentQuery]);
 
     return(
-        <div className="p-8">
-            <h1>Search Results for "{query}"</h1>
-            <ul>
+        <div className="absolute top-24 left-10 right-10">
+            <h1
+            className="text-white text-4xl"
+            >Search results for "{query}"</h1>
+            <div className="p-2"></div>
+            <ul className="object-contain md:object-scale-down space-y-2">
                 {tracks != null && tracks.map((track) => (
-                <li key={track.id}>
-                    <Link href={`/track/${track.id}`}>
-                    {track.name} by {track.artists.map((artist) => artist.name).join(', ')}
-                    </Link>
-                </li>
+                    <TrackItem track={track}/>
                 ))}
             </ul>
         </div>

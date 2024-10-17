@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSearch } from "./context/searchcontext";
+import Link from "next/link";
 
 export default function NavBar(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -20,12 +21,16 @@ export default function NavBar(){
 
     return (
         <nav className=" fixed top-0 left-0 right-0 bg-black shadow-2xl p-3 flex justify-between items-center z-50">
+          <Link
+          href="/"
+          >
           <div className="text-white text-2xl">Songanalyzer</div>
           <Image src="/images/scouterlogo.png"
           width={65}
           height={65}
           alt="logo"
           className="fixed left-40 top-1 p-2"/>
+          </Link>
           <div className="flex items-center space-x-2">
             <div className="relative">
               <input

@@ -15,6 +15,7 @@ module.exports = {
         'spotify-bg':'#1f1f1f',
         'spotify-hover': '#252525',
         'spotify-placeholder':'#636363',
+        'graybg': '#121212',
       },
     },
   },

@@ -2,6 +2,7 @@
 import SongStats from "./songstats";
 import SongInfo from "./songinfo";
 import { useEffect, useState } from "react";
+import nProgress from "nprogress";
 
 const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const modes = ["Minor", "Major"];
@@ -33,6 +34,7 @@ export default function SongDisplay (props){
     const [color, setColor] = useState('');
     async function getInfo () {
         //Get Audio analysis information from the api
+        nProgress.start();
         fetch('/api/trackAnalysis', {
             method: 'POST',
             headers: {
@@ -62,6 +64,7 @@ export default function SongDisplay (props){
             setTrackData(null);
             setError('Failed to get track info');
         });
+        nProgress.done();
     }
 
     if(!info){
@@ -99,7 +102,7 @@ export default function SongDisplay (props){
     }
 
     return (
-        <div className="relative min-h-screen">
+        <div className="relative top-8 min-h-screen">
             {color != '' && 
             <div
             className="absolute top-13 left-0 w-full h-full z-0 pointer-events-none"
@@ -108,7 +111,7 @@ export default function SongDisplay (props){
             }}
             key={color}
             />}
-            <div className="relative p-5">
+            <div className="relative top-16">
                 <div className="absolute left-5">
                     {key !== null && <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode}/>}
                 </div>

@@ -7,13 +7,16 @@ import Link from 'next/link';
 
 export default function Home() {
 
-    const { searchQuery } = useSearch();
 
     return (
     <div>
-        <div className="p-8"/>
-        <div>
-            {/*{searchQuery != '' && <SongDisplay key={searchQuery} songId={searchQuery}/>} */}
+       <div className="flex flex-col items-center justify-center h-screen pt-16 bg-graybg">
+            <h1 className="text-6xl font-bold text-white">
+                Welcome to Songanalyzer
+            </h1>
+            <p className="mt-4 text-lg text-spotify-placeholder">
+                To get started, type a song in the search bar
+            </p>
         </div>
     </div>
     );
