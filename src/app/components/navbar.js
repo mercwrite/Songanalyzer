@@ -20,26 +20,27 @@ export default function NavBar(){
     };
 
     return (
-        <nav className=" fixed top-0 left-0 right-0 bg-black shadow-2xl p-3 flex justify-between items-center z-50">
+        <nav className="sticky top-0 left-0 right-0 backdrop-filter backdrop-blur-lg bg-opacity-90 firefox:bg-opacity-90 bg-black shadow-2xl p-2 flex justify-between items-center max-h-16 z-50">
           <Link
           href="/"
+          className="relative w-fit h-16 pr-2 pl-1"
           >
-          <div className="text-white text-2xl">Songanalyzer</div>
+          <div className="text-white max-sm:hidden text-2xl relative top-4 float-left">Songanalyzer</div>
           <Image src="/images/scouterlogo.png"
-          width={65}
-          height={65}
+          width={48}
+          height={48}
           alt="logo"
-          className="fixed left-40 top-1 p-2"/>
+          className="relative float-right flex-shrink-0 top-3"/>
           </Link>
-          <div className="flex items-center space-x-2">
-            <div className="relative">
+          <div className="flex items-center space-x-1">
+            <div className="relative flex">
               <input
                 type="text"
                 placeholder="Enter Song ID..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="transition ease-in-out shadow appearance-none border placeholder:text-spotify-placeholder outline-spotify-bg border-spotify-bg rounded-3xl w-full py-2 px-3 pr-10 text-white leading-tight bg-spotify-bg hover:outline-spotify-hover hover:bg-spotify-hover focus:outline-white focus:outline-1 focus:transition-all duration-300"
+                className="transition ease-in-out shadow appearance-none border placeholder:text-spotify-placeholder outline-spotify-bg border-spotify-bg rounded-3xl flex-initial w-full py-2 px-3 pr-2 text-white leading-tight bg-spotify-bg hover:outline-spotify-hover hover:bg-spotify-hover focus:outline-white focus:outline-1 focus:transition-all duration-300"
               />
               {searchQuery && (
               <button
@@ -52,7 +53,7 @@ export default function NavBar(){
             </div>
             <button
               onClick={() => handleSearch(searchQuery)}
-              className=" bg-black text-white px-4 py-2 rounded-md"
+              className=" bg-black text-white px-2 py-2 rounded-md"
             >
               Search
             </button>

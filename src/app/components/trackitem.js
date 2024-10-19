@@ -5,34 +5,35 @@ export default function TrackItem (props){
     const track = props.track;
 
     return (
-        <div key={track.id} className="flex relative space-x-4 transition ease-in-out bg-graybg hover:bg-spotify-hover hover:scale-105 rounded-lg w-9/10 max-w-screen duration-100">
-                <img
-                src={track.album.images[0].url}
-                width={128}
-                height={128}
-                className="float-left p-1 rounded-lg"
-                alt="Album image"
-                />
-                <div className="relative float-right top-8">
-                    <Link href={`/track/${track.id}`}>
-                    <h2 className="text-white text-2xl">{track.name}</h2>
-                    </Link>
-                    <p
-                    className="text-spotify-placeholder text-md"
-                    >{track.artists.map((artist) => artist.name).join(', ')}</p>
-                </div>
-                <div className="absolute right-2 top-12">
-                    <Link
-                    href={track.external_urls.spotify}
-                    >
-                        <Image
-                        alt="Open spotify link"
-                        width={32}
-                        height={32}
-                        src={"/images/Spotify_Primary_Logo_RGB_Green.png"}
-                        />
-                    </Link>
-                </div>
-        </div>
+
+        <div key={track.id} className="flex w-[95%] max-w-[95%] bg-graybg hover:bg-spotify-hover transition duration-100 rounded-lg max-h-32 overflow-hidden mx-auto transform hover:scale-105">
+    <img
+        src={track.album.images[0].url}
+        width={128}
+        height={128}
+        className="p-2 rounded-lg flex-shrink-0"
+        alt="Album image"
+    />
+    <div className="flex flex-col justify-center flex-grow p-2 overflow-hidden">
+        <Link href={`/track/${track.id}`}>
+            <h2 className="text-white text-xl font-bold truncate whitespace-nowrap">
+                {track.name}
+            </h2>
+        </Link>
+        <p className="text-spotify-placeholder text-md truncate whitespace-nowrap">
+            {track.artists.map((artist) => artist.name).join(', ')}
+        </p>
+    </div>
+    <div className="flex items-center justify-end p-2">
+        <Link href={track.external_urls.spotify}>
+            <Image
+                alt="Open Spotify link"
+                width={32}
+                height={32}
+                src="/images/Spotify_Primary_Logo_RGB_Green.png"
+            />
+        </Link>
+    </div>
+</div>
     );
 }

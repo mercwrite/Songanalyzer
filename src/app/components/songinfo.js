@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from 'react';
 import ColorThief from 'colorthief';
+import Lyrics from "./lyrics";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function SongInfo(props){
 
@@ -10,6 +13,9 @@ export default function SongInfo(props){
     const songName = props.songName;
     const artists = props.artists[0].name;
     const album = props.album;
+    const lyricsId = props.lyricsId;
+    const lyricsUrl = props.lyricsUrl;
+    const songUrl = props.songUrl;
 
     const [dominantColor, setDominantColor] = useState([0, 0, 0]); // RGB color
     const imgRef = useRef(null);
@@ -48,30 +54,54 @@ export default function SongInfo(props){
       };
 
     return (
-        <div className="relative min-h-screen">
-            <motion.div
-            className="p-0"
-            initial="hidden"
-            animate="visible"
-            variants={variants}
-            >
-                <div className="flex flex-col items-center bg-spotify-bg shadow-xl rounded-lg p-6 max-w-sm">
-                <div className="relative">
-                <img
-                    ref={imgRef}
-                    src={imgSrc}
-                    alt={`${album} Album Cover`}
-                    className="w-112 h-112 rounded-lg object-cover"
-                    crossOrigin="anonymous"
-                />
+      <div className="relative items-center min-h-screen">
+      <motion.div
+        className="p-0"
+        initial="hidden"
+        animate="visible"
+        variants={variants}
+      >
+        <div className="flex flex-col items-center mx-5 bg-spotify-bg shadow-xl rounded-lg p-6 max-w-sm">
+          <div className="relative w-full">
+            <img
+              ref={imgRef}
+              src={imgSrc}
+              alt={`${album} Album Cover`}
+              className="w-full h-auto rounded-lg object-cover"
+              crossOrigin="anonymous"
+            />
+          </div>
+          <div className="mt-4 text-left w-full space-y-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">{songName}</h2>
+            <p className="text-spotify-placeholder text-md">{artists}</p>
+            <p className="text-spotify-placeholder text-sm">{album}</p>
+            <div className="flex mt-4 space-x-4 w-full">
+              <div className="flex items-center">
+                <Link href={songUrl}>
+                  <Image
+                    alt="Open Spotify link"
+                    width={32}
+                    height={32}
+                    src="/images/Spotify_Primary_Logo_RGB_Green.png"
+                  />
+                </Link>
+              </div>
+              {lyricsId != null && (
+                <div className="flex items-center">
+                  <Link href={lyricsUrl}>
+                    <Image
+                      alt="Open Genius"
+                      width={32}
+                      height={32}
+                      src="/images/genius_logo.png"
+                    />
+                  </Link>
                 </div>
-                <div className="mt-4 text-left w-full">
-                <h2 className="text-2xl font-bold text-white">{songName}</h2>
-                <p className="text-spotify-placeholder text-md">{artists}</p>
-                <p className="text-spotify-placeholder text-sm">{album}</p>
-                </div>
+              )}
             </div>
-        </motion.div>
+          </div>
+        </div>
+      </motion.div>
     </div>
     )
 

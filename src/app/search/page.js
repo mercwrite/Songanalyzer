@@ -49,17 +49,16 @@ const SearchPage = () => {
     }, [currentQuery]);
 
     return(
-        <div className="absolute top-24 left-10 right-10">
-            <h1
-            className="text-white text-4xl"
-            >Search results for &ldquo;{query}&rdquo;</h1>
-            <div className="p-2"></div>
-            <ul className="object-contain md:object-scale-down space-y-2">
-                {tracks != null && tracks.map((track) => (
-                    <TrackItem key={track.id} track={track}/>
-                ))}
-            </ul>
+        <div className="absolute flex-col flex-initial top-10 justify-center w-full items-center">
+        <h1 className="text-white text-4xl text-left mx-5 mb-4">
+            Search results for &ldquo;{query}&rdquo;
+        </h1>
+        <div className="flex flex-col space-y-4 w-full justify-center mx-auto px-4">
+            {tracks != null && tracks.map((track) => (
+                <TrackItem key={track.id} track={track} />
+            ))}
         </div>
+    </div>
     );
 }
 
