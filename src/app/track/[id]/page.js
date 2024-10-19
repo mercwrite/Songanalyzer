@@ -7,7 +7,7 @@ export default function TrackPage(){
     const { id } = params;
 
     return (
-        <div className="">
+        <div>
             <SongDisplay key={SongDisplay} songId={id}/>
         </div>
     );
