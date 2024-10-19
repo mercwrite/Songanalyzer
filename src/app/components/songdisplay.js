@@ -121,7 +121,13 @@ export default function SongDisplay (props){
 
                 const getLyrics = async() =>{
                     const lyricsRes = await fetch(
-                        `/api/lyrics?title=${encodeURIComponent(cleanSongName(trackData.data.name))}&artist=${encodeURIComponent(trackData.data.artists[0].name)}`
+                        `/api/lyrics?title=${encodeURIComponent(cleanSongName(trackData.data.name))}&artist=${encodeURIComponent(trackData.data.artists[0].name)}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
                       );
             
                     const lyricsData = await lyricsRes.json();
