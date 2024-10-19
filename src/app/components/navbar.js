@@ -36,7 +36,7 @@ export default function NavBar(){
             <div className="relative flex">
               <input
                 type="text"
-                placeholder="Enter Song ID..."
+                placeholder="Search for a song..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
