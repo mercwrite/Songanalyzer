@@ -16,7 +16,7 @@ export const SearchProvider = ({ children }) => {
   const handleSearch = (query) => {
     //query.preventDefault();
     //setSearchQuery(query);
-    router.push(`/search?q=${query}`);
+    router.push(`/search?q=${query}&offset=0`);
   };
 
   return (

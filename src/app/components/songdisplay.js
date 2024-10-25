@@ -125,7 +125,11 @@ export default function SongDisplay(props) {
                 setBpm(Math.round(analysisData.data.tempo));
                 setMode(modes[analysisData.data.mode]);
                 setDuration(millisecondsToMinutes(analysisData.data.duration_ms));
-                setImage(trackData.data.album.images[0].url);
+                if(trackData.data.album.images[0]){
+                    setImage(trackData.data.album.images[0].url);
+                } else{
+                    setImage('/images/noalbumimage.png');
+                }
                 setSongName(trackData.data.name);
                 setArtists(trackData.data.artists);
                 setAlbum(trackData.data.album.name);

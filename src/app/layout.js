@@ -13,11 +13,6 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata = {
-  title: "Songanalyzer",
-  description: "Find important info for any song",
-};
-
 export default function RootLayout({ children }) {
 
   return (
