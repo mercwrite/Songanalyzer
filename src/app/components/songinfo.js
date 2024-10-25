@@ -11,7 +11,7 @@ export default function SongInfo(props){
     //Display the song name, album name, album image, and artist names for the track
     const imgSrc = props.img;
     const songName = props.songName;
-    const artists = props.artists[0].name;
+    const artists = props.artists;
     const album = props.album;
     const lyricsId = props.lyricsId;
     const lyricsUrl = props.lyricsUrl;
@@ -73,7 +73,7 @@ export default function SongInfo(props){
           </div>
           <div className="mt-4 text-left w-full space-y-1">
             <h2 className="text-xl sm:text-2xl font-bold text-white">{songName}</h2>
-            <p className="text-spotify-placeholder text-md">{artists}</p>
+            <p className="text-spotify-placeholder text-md">{artists.map((artist) => artist.name).join(', ')}</p>
             <p className="text-spotify-placeholder text-sm">{album}</p>
             <div className="flex mt-4 space-x-4 w-full">
               <div className="flex items-center">

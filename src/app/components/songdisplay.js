@@ -37,22 +37,26 @@ function cleanSongName(songName) {
 }
 
 export default function SongDisplay(props) {
-    const [info, setInfo] = useState(false);
-    const [songId, setSongId] = useState(props.songId);
-    const [key, setKey] = useState(null);
-    const [bpm, setBpm] = useState(null);
-    const [duration, setDuration] = useState(null);
-    const [mode, setMode] = useState(null);
-    const [image, setImage] = useState(null);
-    const [songName, setSongName] = useState('');
-    const [artists, setArtists] = useState([]);
-    const [album, setAlbum] = useState('');
+    const songId = props.songId;
     const [analysisData, setAnalysisData] = useState(null);
     const [trackData, setTrackData] = useState(null);
     const [error, setError] = useState(null);
     const [color, setColor] = useState('');
     const [lyricsUrl, setLyricsUrl] = useState(null);
     const [lyricsId, setLyricsId] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+
+    const songName = trackData?.data.name;
+    const artists = trackData?.data.artists;
+    const album = trackData?.data.album.name;
+
+    const key = keys[analysisData?.data.key];
+    const bpm = Math.round(analysisData?.data.tempo);
+    const duration = millisecondsToMinutes(analysisData?.data.duration_ms);
+    const mode = modes[analysisData?.data.mode];
+
+    //Dummy image if no album image is available
+    const image = trackData?.data.album.images[0] ? trackData?.data.album.images[0].url : '/images/noalbumimage.png';
 
     async function getInfo() {
         nProgress.start();
@@ -81,18 +85,9 @@ export default function SongDisplay(props) {
     }
 
     useEffect(() => {
-        if (!info) {
-            setInfo(true);
-            getInfo();
-        }
-    }, [info, songId]);
+        getInfo();
+    }, []);
 
-    useEffect(() => {
-        if (props.songId !== songId) {
-            setSongId(props.songId);
-            setInfo(false);
-        }
-    }, [props.songId, songId]);
 
     useEffect(() => {
         if (analysisData && trackData) {
@@ -121,18 +116,7 @@ export default function SongDisplay(props) {
                     }
                 };
 
-                setKey(keys[analysisData.data.key]);
-                setBpm(Math.round(analysisData.data.tempo));
-                setMode(modes[analysisData.data.mode]);
-                setDuration(millisecondsToMinutes(analysisData.data.duration_ms));
-                if(trackData.data.album.images[0]){
-                    setImage(trackData.data.album.images[0].url);
-                } else{
-                    setImage('/images/noalbumimage.png');
-                }
-                setSongName(trackData.data.name);
-                setArtists(trackData.data.artists);
-                setAlbum(trackData.data.album.name);
+                setLoaded(true);
 
                 if (lyricsId == null && analysisData.data.instrumentalness < 0.5) {
                     getLyrics();
@@ -161,12 +145,12 @@ export default function SongDisplay(props) {
 
             <div className="relative top-10 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
-                    {key !== null && (
+                    {loaded != false && (
                         <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode} />
                     )}
                 </div>
                 <div className="w-full">
-                    {image != null && (
+                    {loaded != false && (
                         <SongInfo
                             img={image}
                             songUrl={trackData.data.external_urls.spotify}
