@@ -4,6 +4,11 @@ import { cookies } from "next/headers";
 export async function fetchSpotifyToken() {
     const cookieStore = cookies();
     const URL = process.env.URL;
+    if(cookieStore.has("spotifyToken")){
+      if(cookieStore.get("spotifyToken").value == ''){
+        await cookieStore.delete("spotifyToken");
+      }
+    }
     if (cookieStore.has("spotifyToken") == false) {
       // Fetch new token if not found in cookies
       const tokenResponse = await fetch(`${URL}api/spotifyToken`,{

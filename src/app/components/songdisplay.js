@@ -3,6 +3,7 @@ import SongStats from "./songstats";
 import SongInfo from "./songinfo";
 import { useEffect, useState } from "react";
 import nProgress from "nprogress";
+import { useRouter } from "next/navigation";
 
 const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const modes = ["Minor", "Major"];
@@ -37,6 +38,7 @@ function cleanSongName(songName) {
 }
 
 export default function SongDisplay(props) {
+    const router = useRouter();
     const songId = props.songId;
     const [analysisData, setAnalysisData] = useState(null);
     const [trackData, setTrackData] = useState(null);
@@ -67,6 +69,9 @@ export default function SongDisplay(props) {
                 body: JSON.stringify({ songId }),
             });
             const analysisData = await analysisResponse.json();
+            if(analysisData.data.error){
+                router.push('/song-not-found');
+            }
             setAnalysisData(analysisData);
 
             const infoResponse = await fetch('/api/trackInfo', {
@@ -78,7 +83,10 @@ export default function SongDisplay(props) {
             setTrackData(trackData);
         } catch (err) {
             setError('Failed to get track info');
+            setTrackData(null);
+            setAnalysisData(null);
             console.error(err);
+            router.push("/song-not-found");
         } finally {
             nProgress.done();
         }

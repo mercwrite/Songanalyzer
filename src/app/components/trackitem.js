@@ -34,7 +34,7 @@ export default function TrackItem (props){
             </p>
         </div>
         <div className="flex items-center justify-end p-2 flex-shrink-0">
-            <Link href={track.external_urls.spotify} className="flex items-center">
+            <Link href={track.external_urls.spotify} className="flex items-center" rel="noopener noreferrer">
                 <Image
                     alt="Open Spotify link"
                     width={32}

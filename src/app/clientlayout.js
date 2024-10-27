@@ -4,6 +4,7 @@ import { SearchProvider } from "./context/searchcontext";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Suspense } from "react"; 
+import Footer from "./components/footer";
 
 
 function ClientLayoutComponent({ children }){
@@ -15,6 +16,9 @@ function ClientLayoutComponent({ children }){
                 {children}
                 <Analytics/>
                 <SpeedInsights/>
+                <footer>
+                    <Footer/>
+                </footer>
             </main>
         </SearchProvider>
     )

@@ -77,7 +77,7 @@ export default function SongInfo(props){
             <p className="text-spotify-placeholder text-sm">{album}</p>
             <div className="flex mt-4 space-x-4 w-full">
               <div className="flex items-center">
-                <Link href={songUrl}>
+                <Link href={songUrl} rel="noopener noreferrer">
                   <Image
                     alt="Open Spotify link"
                     width={32}
@@ -88,7 +88,7 @@ export default function SongInfo(props){
               </div>
               {lyricsId != null && (
                 <div className="flex items-center">
-                  <Link href={lyricsUrl}>
+                  <Link href={lyricsUrl} rel="noopener noreferrer">
                     <Image
                       alt="Open Genius"
                       width={32}
