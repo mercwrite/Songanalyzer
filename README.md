@@ -20,8 +20,10 @@ web scraping practices mainly due to licensing costs. However, the feature might
 
 2. Certain songs may be unavailable depending on whether or not they are in the Spotify database, I plan to address this in the future by creating my own program for local audio analysis (i.e. dragging and dropping an audio file into the application and analyzing the features of the song in real-time).
 
-3. The current methodology for getting Genius lyrics links is prone to errors on certain songs, and it is based on the "Instrumentalness" of the song as determined by Spotify. This means some songs that have lyrics may not display a link to them, and some songs may link to the wrong lyrics page. Currently, I am not sure of a workaround for this issue, but I am aware of it and will try to mitigate this in future updates.
+3. The current methodology for getting Genius lyrics links is prone to errors on certain songs, and it is based on the "Instrumentalness" of the song as determined by Spotify. This means some songs that have lyrics may not display a link to them, and some songs may link to the wrong lyrics page. Currently, I am working on a fix for this and I am aware of the issue.
 
+***ON LOCAL ANALYSIS***
+I have been prototyping models for analyzing songs in real-time, although they aren't ready for production. They will be coming soon (Winter 2024)
 
 ***SCREENSHOTS***
 ![Screenshot (881)](https://github.com/user-attachments/assets/491692af-f5fe-47fa-8a51-247530541ef9)
