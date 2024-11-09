@@ -46,19 +46,17 @@ export default function SongDisplay(props) {
     const [color, setColor] = useState('');
     const [lyricsUrl, setLyricsUrl] = useState(null);
     const [lyricsId, setLyricsId] = useState(null);
-    const [loaded, setLoaded] = useState(false);
 
-    const songName = trackData?.data.name;
-    const artists = trackData?.data.artists;
-    const album = trackData?.data.album.name;
+    const songName = trackData?.data?.name || '';
+    const artists = trackData?.data?.artists || [];
+    const album = trackData?.data?.album?.name || '';
 
-    const key = keys[analysisData?.data.key];
-    const bpm = Math.round(analysisData?.data.tempo);
-    const duration = millisecondsToMinutes(analysisData?.data.duration_ms);
-    const mode = modes[analysisData?.data.mode];
+    const key = analysisData ? keys[analysisData.data.key] : '';
+    const bpm = analysisData ? Math.round(analysisData.data.tempo) : '';
+    const duration = analysisData ? millisecondsToMinutes(analysisData.data.duration_ms) : '';
+    const mode = analysisData ? modes[analysisData.data.mode] : '';
 
-    //Dummy image if no album image is available
-    const image = trackData?.data.album.images[0] ? trackData?.data.album.images[0].url : '/images/noalbumimage.png';
+    const image = trackData?.data?.album?.images?.[0]?.url || '/images/noalbumimage.png';
 
     async function getInfo() {
         nProgress.start();
@@ -69,8 +67,9 @@ export default function SongDisplay(props) {
                 body: JSON.stringify({ songId }),
             });
             const analysisData = await analysisResponse.json();
-            if(analysisData.data.error){
+            if (analysisData.data.error) {
                 router.push('/song-not-found');
+                return;
             }
             setAnalysisData(analysisData);
 
@@ -96,42 +95,28 @@ export default function SongDisplay(props) {
         getInfo();
     }, []);
 
-
     useEffect(() => {
-        if (analysisData && trackData) {
+        const fetchLyrics = async () => {
             try {
-                const getLyrics = async () => {
-                    const lyricsRes = await fetch(
-                        `/api/lyrics?title=${encodeURIComponent(cleanSongName(trackData.data.name))}&artist=${encodeURIComponent(trackData.data.artists[0].name)}`,
-                        {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                        }
-                    );
-
-                    const lyricsData = await lyricsRes.json();
-
-                    if (lyricsData.songUrl) {
-                        setLyricsUrl(lyricsData.songUrl);
-                    } else {
-                        setError('Lyrics not found');
+                const lyricsRes = await fetch(
+                    `/api/lyrics?title=${encodeURIComponent(cleanSongName(songName))}&artist=${encodeURIComponent(artists[0]?.name || '')}`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                     }
+                );
 
-                    if (lyricsData.songId != null) {
-                        setLyricsId(lyricsData.songId);
-                    } else {
-                        setError('Lyrics not found');
-                    }
-                };
-
-                setLoaded(true);
-
-                if (lyricsId == null && analysisData.data.instrumentalness < 0.5) {
-                    getLyrics();
-                }
+                const lyricsData = await lyricsRes.json();
+                if (lyricsData.songUrl) setLyricsUrl(lyricsData.songUrl);
+                if (lyricsData.songId != null) setLyricsId(lyricsData.songId);
+                if (!lyricsData.songUrl && lyricsData.songId == null) setError('Lyrics not found');
             } catch {
                 setError("No data found");
             }
+        };
+
+        if (analysisData && trackData && lyricsId == null && analysisData.data.instrumentalness < 0.5) {
+            fetchLyrics();
         }
     }, [analysisData, trackData, lyricsId]);
 
@@ -141,7 +126,7 @@ export default function SongDisplay(props) {
 
     return (
         <div className="relative min-h-screen">
-            {color !== '' && 
+            {color && 
                 <div
                     className="absolute top-13 left-0 w-full h-full z-0 pointer-events-none"
                     style={{
@@ -153,12 +138,12 @@ export default function SongDisplay(props) {
 
             <div className="relative top-10 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
-                    {loaded != false && (
+                    {analysisData && (
                         <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode} />
                     )}
                 </div>
                 <div className="w-full">
-                    {loaded != false && (
+                    {trackData && (
                         <SongInfo
                             img={image}
                             songUrl={trackData.data.external_urls.spotify}
