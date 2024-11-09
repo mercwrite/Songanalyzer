@@ -58,6 +58,30 @@ export default function SongDisplay(props) {
 
     const image = trackData?.data?.album?.images?.[0]?.url || '/images/noalbumimage.png';
 
+    // Check for existing data in local storage
+    useEffect(() => {
+        const cachedAnalysisData = localStorage.getItem(`analysisData_${songId}`);
+        const cachedTrackData = localStorage.getItem(`trackData_${songId}`);
+        const cachedLyricsUrl = localStorage.getItem(`lyricsUrl_${songId}`);
+        const cachedLyricsId = localStorage.getItem(`lyricsId_${songId}`);
+
+        if (cachedAnalysisData && cachedTrackData) {
+            setAnalysisData(JSON.parse(cachedAnalysisData));
+            setTrackData(JSON.parse(cachedTrackData));
+            setLyricsUrl(cachedLyricsUrl);
+            setLyricsId(cachedLyricsId);
+        } else {
+            getInfo();
+        }
+
+        return () => {
+            localStorage.removeItem(`analysisData_${songId}`);
+            localStorage.removeItem(`trackData_${songId}`);
+            localStorage.removeItem(`lyricsUrl_${songId}`);
+            localStorage.removeItem(`lyricsId_${songId}`);
+        };
+    }, [songId]);
+
     async function getInfo() {
         nProgress.start();
         try {
@@ -72,6 +96,7 @@ export default function SongDisplay(props) {
                 return;
             }
             setAnalysisData(analysisData);
+            localStorage.setItem(`analysisData_${songId}`, JSON.stringify(analysisData));
 
             const infoResponse = await fetch('/api/trackInfo', {
                 method: 'POST',
@@ -80,6 +105,7 @@ export default function SongDisplay(props) {
             });
             const trackData = await infoResponse.json();
             setTrackData(trackData);
+            localStorage.setItem(`trackData_${songId}`, JSON.stringify(trackData));
         } catch (err) {
             setError('Failed to get track info');
             setTrackData(null);
@@ -90,10 +116,6 @@ export default function SongDisplay(props) {
             nProgress.done();
         }
     }
-
-    useEffect(() => {
-        getInfo();
-    }, []);
 
     useEffect(() => {
         const fetchLyrics = async () => {
@@ -107,9 +129,17 @@ export default function SongDisplay(props) {
                 );
 
                 const lyricsData = await lyricsRes.json();
-                if (lyricsData.songUrl) setLyricsUrl(lyricsData.songUrl);
-                if (lyricsData.songId != null) setLyricsId(lyricsData.songId);
-                if (!lyricsData.songUrl && lyricsData.songId == null) setError('Lyrics not found');
+                if (lyricsData.songUrl) {
+                    setLyricsUrl(lyricsData.songUrl);
+                    localStorage.setItem(`lyricsUrl_${songId}`, lyricsData.songUrl);
+                }
+                if (lyricsData.songId != null) {
+                    setLyricsId(lyricsData.songId);
+                    localStorage.setItem(`lyricsId_${songId}`, lyricsData.songId);
+                }
+                if (!lyricsData.songUrl && lyricsData.songId == null) {
+                    setError('Lyrics not found');
+                }
             } catch {
                 setError("No data found");
             }
@@ -118,7 +148,7 @@ export default function SongDisplay(props) {
         if (analysisData && trackData && lyricsId == null && analysisData.data.instrumentalness < 0.5) {
             fetchLyrics();
         }
-    }, [analysisData, trackData, lyricsId]);
+    }, [analysisData, trackData, lyricsId, songId]);
 
     const handleColor = (bgcolor) => {
         setColor(bgcolor);

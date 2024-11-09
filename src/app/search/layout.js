@@ -9,7 +9,7 @@ export default function SearchLayout({children}){
 
     return(
         <>
-            <main>
+            <main className="min-h-screen">
                 {children}
             </main>
         </>
