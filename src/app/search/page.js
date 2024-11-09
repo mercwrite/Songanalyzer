@@ -5,6 +5,9 @@ import TrackItem from "@/app/components/trackitem";
 import nProgress from "nprogress";
 import Loading from "./loading";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Use Next.js v13+ router hooks
+
+const CACHE_EXPIRATION_TIME = 60000; // 1 minute in milliseconds
 
 const SearchPage = () => {
     const [tracks, setTracks] = useState([]);
@@ -17,40 +20,45 @@ const SearchPage = () => {
     const searchParams = useSearchParams();
     const query = searchParams.get('q');
     const offset = parseInt(searchParams.get('offset'));
+    const pathname = usePathname(); // Track the current pathname
+
+    // Cache key for session storage
+    const cacheKey = `${query}-${offset}`;
 
     useEffect(() => {
         fetchData();
-    }, [query, offset]);
+    }, [query, offset]); // Trigger fetch when query or offset changes
 
-    const CACHE_TTL = 150000; // 2,5 minutes in milliseconds
+    // Clear cached data when navigating away from search page
+    useEffect(() => {
+        if (!pathname.includes('/search')) {
+            sessionStorage.removeItem(cacheKey);
+        }
+    }, [pathname]);
 
-    const fetchData = async (url = '/api/trackSearch') => {
+    const fetchData = async () => {
         if (!query) return;
-    
-        const cacheKey = `${query}-${offset}`;
+
         const cachedData = sessionStorage.getItem(cacheKey);
-    
-        // Check if cached data exists and hasn't expired
+
+        // Check if cached data exists
         if (cachedData) {
-            const { data, timestamp } = JSON.parse(cachedData);
-            if (Date.now() - timestamp < CACHE_TTL) {
+            const { data } = JSON.parse(cachedData);
+
                 setTracks(data.tracks);
                 setTotalResults(data.totalResults);
                 setNextPageUrl(data.nextPageUrl);
                 setPrevPageUrl(data.prevPageUrl);
                 setError(null);
-                return; // Use cached data
-            } else {
-                sessionStorage.removeItem(cacheKey); // Remove expired cache
-            }
+                return; // Skip fetching new data if cache is still valid
         }
-    
-        // Fetch fresh data if no valid cache
+
+        // Fetch new data if no valid cache exists
         nProgress.start();
         setLoading(true);
-    
+
         try {
-            const response = await fetch(url, {
+            const response = await fetch('/api/trackSearch', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,14 +66,14 @@ const SearchPage = () => {
                 body: JSON.stringify({ query, offset })
             });
             const data = await response.json();
-    
+
             setTracks(data.data.tracks.items);
             setTotalResults(data.data.tracks.total);
             setNextPageUrl(data.data.tracks.next);
             setPrevPageUrl(data.data.tracks.previous);
             setError(null);
-    
-            // Cache fetched data with timestamp
+
+            // Cache the fetched data with the current timestamp
             sessionStorage.setItem(
                 cacheKey,
                 JSON.stringify({
@@ -74,11 +82,15 @@ const SearchPage = () => {
                         totalResults: data.data.tracks.total,
                         nextPageUrl: data.data.tracks.next,
                         prevPageUrl: data.data.tracks.previous,
-                    },
-                    timestamp: Date.now()
+                    }
                 })
             );
-        } catch {
+
+            // Set a timer to automatically clear the cache after 2.5 minutes (150,000 ms)
+            setTimeout(() => {
+                sessionStorage.removeItem(cacheKey);
+            }, CACHE_EXPIRATION_TIME);
+        } catch (error) {
             setTracks(null);
             setError('Search Failed.');
         } finally {
@@ -86,10 +98,9 @@ const SearchPage = () => {
             setLoading(false);
         }
     };
-    
 
     return (
-        <div className="relative flex-col flex-initial top-10 justify-center w-full min-h-screen items-center">
+        <div className="relative flex-col flex-initial top-10 justify-center w-full min-hscreen items-center">
             <h1 className="text-white text-4xl text-left mx-5 mb-4">
                 Search results for &ldquo;{query}&rdquo;
             </h1>
