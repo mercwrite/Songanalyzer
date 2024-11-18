@@ -3,9 +3,6 @@ import Image from "next/image";
 export default function TrackItem (props){
 
     const track = props.track;
-
-
-
     return (
 
         <div key={track.id} className="flex w-[95%] max-w-[95%] bg-graybg hover:bg-spotify-hover transition duration-100 rounded-lg max-h-32 overflow-hidden mx-auto transform hover:scale-105">

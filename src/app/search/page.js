@@ -5,13 +5,13 @@ import TrackItem from "@/app/components/trackitem";
 import nProgress from "nprogress";
 import Loading from "./loading";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Use Next.js v13+ router hooks
+import { usePathname } from "next/navigation";
 
 const CACHE_EXPIRATION_TIME = 60000; // 1 minute in milliseconds
 
 const SearchPage = () => {
     const [tracks, setTracks] = useState([]);
-    const [totalResults, setTotalResults] = useState(0);
+    const [results, setTotalResults] = useState(0);
     const [nextPageUrl, setNextPageUrl] = useState(null);
     const [prevPageUrl, setPrevPageUrl] = useState(null);
     const [error, setError] = useState(null);
@@ -20,14 +20,14 @@ const SearchPage = () => {
     const searchParams = useSearchParams();
     const query = searchParams.get('q');
     const offset = parseInt(searchParams.get('offset'));
-    const pathname = usePathname(); // Track the current pathname
+    const pathname = usePathname();
 
     // Cache key for session storage
     const cacheKey = `${query}-${offset}`;
 
     useEffect(() => {
         fetchData();
-    }, [query, offset]); // Trigger fetch when query or offset changes
+    }, [query, offset]);
 
     // Clear cached data when navigating away from search page
     useEffect(() => {
@@ -50,7 +50,7 @@ const SearchPage = () => {
                 setNextPageUrl(data.nextPageUrl);
                 setPrevPageUrl(data.prevPageUrl);
                 setError(null);
-                return; // Skip fetching new data if cache is still valid
+                return; 
         }
 
         // Fetch new data if no valid cache exists
@@ -72,8 +72,6 @@ const SearchPage = () => {
             setNextPageUrl(data.data.tracks.next);
             setPrevPageUrl(data.data.tracks.previous);
             setError(null);
-
-            // Cache the fetched data with the current timestamp
             sessionStorage.setItem(
                 cacheKey,
                 JSON.stringify({
@@ -86,7 +84,7 @@ const SearchPage = () => {
                 })
             );
 
-            // Set a timer to automatically clear the cache after 2.5 minutes (150,000 ms)
+            // Set a timer to automatically remove results from the cache after 1 minute
             setTimeout(() => {
                 sessionStorage.removeItem(cacheKey);
             }, CACHE_EXPIRATION_TIME);
