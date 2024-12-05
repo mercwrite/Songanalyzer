@@ -1,3 +1,4 @@
+import Link from "next/link";
 import TopSongs from "./components/topsongs";
 
 export const metadata = {
@@ -16,6 +17,16 @@ export default function Home() {
             <p className="mt-4 text-xl md:text-lg text-spotify-placeholder text-center max-w-md">
                 To get started, type a song in the search bar
             </p>
+            <p className="mt-4 text-xl md:text-lg text-white text-center max-w-md">
+                IMPORTANT NOTE: Unfortunately, as of November 27th, 2024, Spotify released an update
+                to their API which deprecated some of the essential functions needed for Songanalyzer to function.
+            </p>
+            <p className="mt-4 text-xl md:text-lg text-white text-center max-w-md">
+                For more information on the change made by Spotify, click the link below.
+            </p>
+            <Link href="https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api" className="text-white">
+            https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api
+            </Link>
         </div>
         <TopSongs/>
         <div className="mb-12" />
