@@ -85,6 +85,7 @@ export default function SongDisplay(props) {
     async function getInfo() {
         nProgress.start();
         try {
+            /*
             const analysisResponse = await fetch('/api/trackFeatures', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -97,7 +98,7 @@ export default function SongDisplay(props) {
             }
             setAnalysisData(analysisData);
             localStorage.setItem(`analysisData_${songId}`, JSON.stringify(analysisData));
-
+            */
             const infoResponse = await fetch('/api/trackInfo', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -116,7 +117,7 @@ export default function SongDisplay(props) {
             nProgress.done();
         }
     }
-
+    /*
     useEffect(() => {
         const fetchLyrics = async () => {
             try {
@@ -144,12 +145,12 @@ export default function SongDisplay(props) {
                 setError("No data found");
             }
         };
-
+        
         if (analysisData && trackData && lyricsId == null && analysisData.data.instrumentalness < 0.5) {
             fetchLyrics();
         }
     }, [analysisData, trackData, lyricsId, songId]);
-
+    */
     const handleColor = (bgcolor) => {
         setColor(bgcolor);
     };
@@ -168,9 +169,9 @@ export default function SongDisplay(props) {
 
             <div className="relative top-10 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
-                    {analysisData && (
+                    {
                         <SongStats songKey={key} bpm={bpm} duration={duration} mode={mode} />
-                    )}
+                    }
                 </div>
                 <div className="w-full">
                     {trackData && (
